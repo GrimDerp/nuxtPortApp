@@ -1,0 +1,31 @@
+{
+  "name": "tpmPortfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "core-js": "^3.25.3",
+    "dat.gui": "^0.7.9",
+    "gsap": "^3.11.5",
+    "nuxt": "^2.15.8",
+    "orbit-controls-es6": "^2.0.1",
+    "three": "^0.151.3",
+    "unpkg": "^0.2.0",
+    "vue": "^2.7.10",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-fonts": "^3.0.0",
+    "@nuxtjs/tailwindcss": "^5.3.3",
+    "postcss": "^8.4.17"
+  },
+  "extensions": [
+    ".vue"
+  ]
+}
