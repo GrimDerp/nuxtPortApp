@@ -9,17 +9,19 @@
       >
         <h1 
           id="BradyChoate" 
-          class="font-maven text-2xl uppercase opacity-0"
+          class="font-maven text-2.5xl uppercase opacity-0"
           style="transform: translateY(30px)"
           >
-          Brady Choate
+          Howdy yall,
+          I'm Brady, and this is my site. click around, it should do stuff.
         </h1>
           <p 
             id="description"
-            class="font-maven text-4xl opacity: 0"
+            class="font-maven text-5xl opacity: 0"
             style="transform: translateY(30px)"
             >
-            Inspiring change through creativity: Designing for a better future
+            Aspiring to Inspire change through creativity: Designing for a better future
+
           </p>
         
 
@@ -27,10 +29,10 @@
           <a
           id="button1"
           href="https://www.bchoatedesign.com/home/case-studies"
-            class="border px-4 py-2 rounded-lg text-4xl font-maven mt-12 hover:bg-white hover:text.gray-800 inline-block"
+            class="border px-8 py-2 rounded-lg text-4xl font-maven mt-12 hover:bg-white hover:text.gray-800 inline-block"
             style="transform: translateY(30px)"
             >
-            Projects  
+            Work Projects  
           </a>
         </button>
           <button>
@@ -40,7 +42,9 @@
             class="border px-8 py-2 rounded-lg text-4xl font-maven mt-12 hover:bg-white hover:text.gray-800 inline-block"
             style="transform: translateY(30px)"
             >
+            External
             Portfolio
+            Site
           </a>
         </button>
       </div>
