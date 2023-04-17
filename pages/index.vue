@@ -49,14 +49,26 @@
 </template>
 
 <script>
-
-import { WebGLRenderer, Raycaster, Scene, PerspectiveCamera, PlaneGeometry, MeshPhongMaterial, DoubleSide, Mesh, DirectionalLight, BufferGeometry, FlatShading, PointsMaterial, BufferAttribute, Float32BufferAttribute, Points } from 'three'
 import gsap from 'gsap'
-//import * as THREE from 'three';
-import OrbitControls from 'orbit-controls-es6'
-import * as dat from 'dat.gui'
-import { LoopOnce } from 'three'
-import { Light } from 'three'
+import {
+  PlaneGeometry,
+  BufferAttribute,
+  Raycaster,
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  MeshPhongMaterial,
+  DoubleSide,
+  FlatShading,
+  Mesh,
+  DirectionalLight,
+  BufferGeometry,
+  PointsMaterial,
+  Float32BufferAttribute,
+  Points
+} from 'three'
+//import OrbitControls from 'orbit-controls-es6'
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 
 export default {
   mounted(){
@@ -72,87 +84,13 @@ plane: {
   height: 400,
   widthSegments: 128,
   heightSegments: 128
+  }
 }
-}
-// width gui
 gui.add(world.plane, 'width', 1, 64, ).onChange(generatePlane)
-//height gui 
 gui.add(world.plane, 'height', 1, 64, ).onChange(generatePlane)
-//segments
+
 gui.add(world.plane, 'widthSegments', 1, 128, ).onChange(generatePlane)  
 gui.add(world.plane, 'heightSegments', 1, 128, ).onChange(generatePlane)  
-
-//cameras & casters
-const raycaster = new Raycaster()
-const scene = new Scene()
-const camera = new PerspectiveCamera(
-75, 
-innerWidth / innerHeight,
-0.1,
-1000
-)
-const renderer = new WebGLRenderer({
-  canvas: this.$refs.canvas
-})
-
-
-
-renderer.setSize(innerWidth, innerHeight)
-renderer.setPixelRatio(devicePixelRatio)
-document.body.appendChild(renderer.domElement)
-
-new OrbitControls(camera, renderer.domElement)
-camera.position.z = 50
-
-const planeGeometry = new PlaneGeometry(
-world.plane.width,
-world.plane.height,
-world.plane.widthSegments,
-world.plane.heightSegments
-)
-const planeMaterial = new MeshPhongMaterial({
-  //color: 0xff0000,
-  side: DoubleSide,
-  flatShading: true,  //THREE.FlatShading
-  vertexColors: true
-})
-const planeMesh = new Mesh(planeGeometry, planeMaterial)
-scene.add(planeMesh)
-generatePlane()
-
-//lighting
-const light = new DirectionalLight(0xffffff, 1)
-light.position.set(0, 1, 1)
-scene.add(light)
-
-const backLight = new DirectionalLight(0xffffff, 1)
-light.position.set(0, -1, -1)
-scene.add(backLight)
-
-const starGeometry = new BufferGeometry()
-const starMaterial = new PointsMaterial({
-color: 0xffffff
-})
-
-const starVertices = []
-for (let i = 0; i < 11000; i++) {
-const x = (Math.random() - .05) * 2000
-const y = (Math.random() - .05) * 2000
-const z = (Math.random() - .05) * 2000
-starVertices.push(x, y, z)
-}
-starGeometry.setAttribute('position', new Float32BufferAttribute(
-starVertices, 3))
-
-const stars = new Points(starGeometry, starMaterial)
-scene.add()  
-
-console.log(starVertices);
-console.log(starGeometry);
-console.log(starMaterial);
-
-
-
 
 function generatePlane(){
 planeMesh.geometry.dispose()
@@ -162,7 +100,7 @@ planeMesh.geometry = new PlaneGeometry(
   world.plane.widthSegments, 
   world.plane.heightSegments
   )
-}
+
 //vertice position randomization
 const {array} = planeMesh.geometry.attributes.position
 const randomValues = []
@@ -183,7 +121,6 @@ planeMesh.geometry.attributes.position.randomValues = randomValues
 planeMesh.geometry.attributes.position.originalPosition =
 planeMesh.geometry.attributes.position.array
 //colorsnext
-
 const colors = []
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++){
 colors.push(0, 0.19, 0.4)
@@ -192,14 +129,89 @@ colors.push(0, 0.19, 0.4)
 planeMesh.geometry.setAttribute(
 'color',
 new BufferAttribute(new Float32Array(colors),3)
+  )
+}
+
+const raycaster = new Raycaster()
+const scene = new Scene()
+const camera = new PerspectiveCamera(
+75, 
+innerWidth / innerHeight,
+0.1,
+1000
 )
-//}  
+const renderer = new WebGLRenderer({
+  canvas: this.$refs.canvas
+})
+
+renderer.setSize(innerWidth, innerHeight)
+renderer.setPixelRatio(devicePixelRatio)
+//document.body.appendChild(renderer.domElement)
+
+var controls = new OrbitControls(camera, renderer.domElement)
+camera.position.z = 50
+
+
+const planeGeometry = new PlaneGeometry(
+world.plane.width,
+world.plane.height,
+world.plane.widthSegments,
+world.plane.heightSegments
+)
+const planeMaterial = new MeshPhongMaterial({
+  //color: 0xff0000,
+  side: DoubleSide,
+  flatShading: true,
+  vertexColors: true
+})
+const planeMesh = new Mesh(planeGeometry, planeMaterial)
+scene.add(planeMesh)
+generatePlane()
+
+//lighting
+const light = new DirectionalLight(0xffffff, 1)
+light.position.set(0, 1, 1)
+scene.add(light)
+
+const light2 = new DirectionalLight(0xffffff, 1)
+light.position.set(0, 2, 10)
+scene.add(light)
+
+const backLight = new DirectionalLight(0xffffff, 1)
+light.position.set(0, -1, -1)
+scene.add(backLight)
+
+const starGeometry = new BufferGeometry()
+const starMaterial = new PointsMaterial({
+color: 0xffffff
+})
+console.log(starGeometry);
+console.log(starMaterial);
+
+
+const starVertices = []
+for (let i = 0; i < 11000; i++) {
+const x = (Math.random() - .05) * 2000
+const y = (Math.random() - .05) * 2000
+const z = (Math.random() - .05) * 2000
+starVertices.push(x, y, z)
+}
+
+starGeometry.setAttribute(
+  'position',
+   new Float32BufferAttribute(starVertices, 3)
+   )
+
+const stars = new Points(starGeometry, starMaterial)
+scene.add()  
 
 const mouse = {
 x: undefined,
 y: undefined
 }
-
+//console.log(starVertices);
+//console.log(starGeometry);
+//console.log(starMaterial);
 let frame = 0
 function animate(){
 requestAnimationFrame(animate)
@@ -222,6 +234,7 @@ array[i] = originalPosition[i] +
 array[i + 1] = originalPosition[i +1] + 
   Math.sin(frame + randomValues[i + 1]) * 0.03
 }
+
 planeMesh.geometry.attributes.position.needsUpdate = true
 
 const intersects = raycaster.intersectObject(planeMesh)
@@ -242,8 +255,6 @@ const {color} = intersects[0].object.geometry.attributes
   color.setZ(intersects[0].face.c, 1)
 //needsUpdate = true
 intersects[0].object.geometry.attributes.color.needsUpdate = true
-
-renderer.render(scene, camera)
 
   const initialColor = {
     r: 0,
