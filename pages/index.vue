@@ -84,8 +84,8 @@ export default {
 const gui = new dat.GUI()
 const world = {
 plane: {
-  width: 400,
-  height: 400,
+  width: 256,
+  height: 256,
   widthSegments: 128,
   heightSegments: 128
   }
@@ -93,8 +93,8 @@ plane: {
 gui.add(world.plane, 'width', 1, 64, ).onChange(generatePlane)
 gui.add(world.plane, 'height', 1, 64, ).onChange(generatePlane)
 
-gui.add(world.plane, 'widthSegments', 1, 128, ).onChange(generatePlane)  
-gui.add(world.plane, 'heightSegments', 1, 128, ).onChange(generatePlane)  
+gui.add(world.plane, 'widthSegments', 1, 64, ).onChange(generatePlane)  
+gui.add(world.plane, 'heightSegments', 1, 64, ).onChange(generatePlane)  
 
 function generatePlane(){
 planeMesh.geometry.dispose()
@@ -194,20 +194,19 @@ console.log(starMaterial);
 
 
 const starVertices = []
-for (let i = 0; i < 11000; i++) {
-const x = (Math.random() - .05) * 2000
-const y = (Math.random() - .05) * 2000
-const z = (Math.random() - .05) * 2000
+for (let i = 0; i < 50000; i++) {
+const x = (Math.random() - .05) * 5000
+const y = (Math.random() - .05) * 5000
+const z = (Math.random() - .05) * 5000
 starVertices.push(x, y, z)
 }
-
-starGeometry.setAttribute(
-  'position',
+console.log(starVertices);
+starGeometry.setAttribute('position',
    new Float32BufferAttribute(starVertices, 3)
    )
 
 const stars = new Points(starGeometry, starMaterial)
-scene.add()  
+scene.add(stars)  
 
 const mouse = {
 x: undefined,
@@ -217,6 +216,7 @@ y: undefined
 //console.log(starGeometry);
 //console.log(starMaterial);
 let frame = 0
+
 function animate(){
 requestAnimationFrame(animate)
 renderer.render(scene, camera)
@@ -233,17 +233,17 @@ for (let i = 0; i < array.length; i++) {
 const element = array[i];
 // x
 array[i] = originalPosition[i] + 
-  Math.cos(frame + randomValues[i]) * 0.03
+  Math.cos(frame + randomValues[i]) * 0.02
 // y
 array[i + 1] = originalPosition[i +1] + 
-  Math.sin(frame + randomValues[i + 1]) * 0.03
+  Math.sin(frame + randomValues[i + 1]) * 0.02
 }
 
 planeMesh.geometry.attributes.position.needsUpdate = true
 
 const intersects = raycaster.intersectObject(planeMesh)
 if (intersects.length > 0) {
-const {color} = intersects[0].object.geometry.attributes
+  const {color} = intersects[0].object.geometry.attributes
 
   //vertice 1
   color.setX(intersects[0].face.a, 0.1)
@@ -294,7 +294,7 @@ intersects[0].object.geometry.attributes.color.needsUpdate = true
   })
 }
 
-stars.rotation.x += 0.0005
+stars.rotation.x += 0.0003
 }
 
 animate()
@@ -303,7 +303,7 @@ animate()
 addEventListener('mousemove', (event) => 
 {
 mouse.x = (event.clientX / innerWidth) * 2 - 1
-mouse.y = (event.clientY / innerHeight) * 2 + 1
+mouse.y = -(event.clientY / innerHeight) * 2 + 1
 //console.log(event.clientY)
 //console.log(mouse)
 })
