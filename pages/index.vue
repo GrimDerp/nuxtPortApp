@@ -8,7 +8,7 @@
         style="top: 50%;transform: translate(50%, -50%); left: 15%"
       >
         <h1 
-          id="BradyChoate" 
+          id="HiYall" 
           class="font-maven text-2.5xl uppercase opacity-0"
           style="transform: translateY(30px)"
           >
